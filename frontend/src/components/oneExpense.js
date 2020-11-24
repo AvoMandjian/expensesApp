@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { getOneExpense } from '../components/API/ExpensesAPI';
-
+import React from 'react';
 
 export default function OneExpense(props) {
     return (
