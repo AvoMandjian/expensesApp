@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { getOneExpense } from './ExpensesAPI'
+import { getOneExpense } from '../components/API/ExpensesAPI';
 
 
-export default function OneExpense() {
-    const [data, setData] = useState([])
-
-    const oneExpense = async () => {
-        const result = await getOneExpense();
-        setData(result.data);
-    }
-    useEffect(() => {
-        oneExpense();
-    }, []);
+export default function OneExpense(props) {
     return (
         <div>
             <table className="table table-bordered">
 
                 <tbody>
-                    <tr>
-                        <th>Name</th>
+                    <tr className="thead-dark">
+
+
+                        <th >Name</th>
                         <th>Amount</th>
+                        <th>Category</th>
+
+
                     </tr>
-                    <tr key={data.id} >
-                        <td> {data.name}</td>
-                        <td> {data.amount}</td>
+                    <tr key={props.expenses_id} >
+                        <td> {props.name}</td>
+                        <td> {props.amount}</td>
+                        <td>{props.category_name}</td>
                     </tr>
                 </tbody>
             </table>

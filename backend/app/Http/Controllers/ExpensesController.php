@@ -53,6 +53,12 @@ class ExpensesController extends Controller
      * @param  \App\Models\Expenses  $expenses
      * @return \Illuminate\Http\Response
      */
+
+    public function showUserExpenses($id)
+    {
+        $expense = Expenses::find($id);
+        return response()->json($expense, 200);
+    }
     public function show($email)
     {
         $expenses = DB::select("SELECT  expenses.* ,users.email, categories.name as category_name

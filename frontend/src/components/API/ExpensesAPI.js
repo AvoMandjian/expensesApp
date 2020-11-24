@@ -6,9 +6,9 @@ function getAllExpenses(email) {
         'http://127.0.0.1:8000/api/expenses/' + email,
     );
 }
-async function getOneExpense() {
+async function getOneExpense(id) {
     return await axios.get(
-        'http://localhost:8000/api/expenses/1',
+        'http://localhost:8000/api/expenses/showUserExpenses/' + id,
     );
 }
 

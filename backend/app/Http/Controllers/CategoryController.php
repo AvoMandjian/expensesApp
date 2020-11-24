@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(Category::get(), 200);
+        return response()->json(Category::get()->sort(), 200);
     }
 
     /**
@@ -46,13 +46,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        dd($category->name);
-        $showCategory = Category::find($category->id);
-        // THIS MUST SHOW NO RECORD WHEN ID IS NOT IN DB
-        // if (isNull($showCountry)) {
-        //     return response()->json("NO RECORD", 404);
-        // }
-        return response()->json($showCategory, 200);
+        //
     }
 
     /**

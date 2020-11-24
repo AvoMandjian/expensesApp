@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
 import { editExpense } from '../API/ExpensesAPI';
 import { getAllCategory } from '../API/CategoryAPI';
+import OneExpense from "../oneExpense";
 
 export default function EditForm(props) {
     const [expenseName, setexpenseName] = useState(props.name);
@@ -30,6 +31,7 @@ export default function EditForm(props) {
 
     return (
         <div className="Login">
+            <OneExpense name={props.name} amount={props.amount} category_name={props.category_name} expenses_id={props.expenses_id} />
             <Form onSubmit={handleSubmit}>
                 <Form.Group size="lg" controlId='expenseName' >
                     <Form.Control

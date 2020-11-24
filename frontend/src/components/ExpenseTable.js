@@ -34,11 +34,11 @@ export default function ExpenseTable(props) {
         );
 
     }
-    function handleEdit(expenses_id, name, amount, category_id) {
+    function handleEdit(category_name, expenses_id, name, amount, category_id) {
 
         ReactDOM.render(
             <React.StrictMode>
-                <EditForm expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
+                <EditForm category_name={category_name} expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
             </React.StrictMode>,
             document.getElementById('root')
         );
@@ -51,7 +51,7 @@ export default function ExpenseTable(props) {
             <table className="table table-bordered">
 
                 <tbody>
-                    <tr>
+                    <tr className="thead-dark">
                         <th>Expense</th>
                         <th>Amount</th>
                         <th>Category</th>
@@ -67,7 +67,7 @@ export default function ExpenseTable(props) {
                             <td>{item.created_at}</td>
                             <td>
                                 <button onClick={() => handleDelete(item.id)} className='btn btn-danger m-1'>DELETE</button>
-                                <button onClick={() => handleEdit(item.id, item.name, item.amount, item.category_id)} className='btn btn-secondary m-1'>EDIT</button>
+                                <button onClick={() => handleEdit(item.category_name, item.id, item.name, item.amount, item.category_id)} className='btn btn-secondary m-1'>EDIT</button>
                             </td>
                         </tr>
                     ))}
