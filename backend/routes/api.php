@@ -30,3 +30,5 @@ Route::post('expenses', 'ExpensesController@store');
 Route::put('expenses/{id}', 'ExpensesController@update');
 
 Route::get('categories', 'CategoryController@index');
+
+Route::get('user/{email}', 'getUser@getId');

@@ -5,7 +5,7 @@ import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
 import { addExpense } from '../API/ExpensesAPI';
 import { getAllCategory } from '../API/CategoryAPI';
 
-export default function AddForm() {
+export default function AddForm(props) {
     const [expenseName, setexpenseName] = useState("");
     const [expenseAmount, setAmount] = useState('');
     const [categoryId, setCategory] = useState('');
@@ -23,11 +23,11 @@ export default function AddForm() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        await addExpense(expenseName, expenseAmount, categoryId);
+        await addExpense(expenseName, expenseAmount, categoryId, props.user_id);
         window.location.reload();
 
     }
-
+   
     return (
         <div className="Login">
             <Form onSubmit={handleSubmit}>

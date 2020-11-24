@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { getAllExpenses, deleteExpense } from './API/ExpensesAPI';
+import { getAllExpenses, deleteExpense, getUserId } from './API/ExpensesAPI';
 import AddForm from './Pages/addForm';
 import EditForm from './Pages/editForm';
 
@@ -9,13 +9,19 @@ import EditForm from './Pages/editForm';
 export default function ExpenseTable(props) {
 
     const [data, setData] = useState([]);
+    const [user_id, setUserId] = useState('');
 
     const allExpenses = async () => {
         const result = await getAllExpenses(props.userEmail);
         setData(result.data);
     }
+    const userId = async () => {
+        const userId = await getUserId(props.userEmail);
+        setUserId(userId.data);
+    }
     useEffect(() => {
         allExpenses();
+        userId();
 
     }, []);
 
@@ -28,7 +34,7 @@ export default function ExpenseTable(props) {
 
         ReactDOM.render(
             <React.StrictMode>
-                <AddForm />
+                <AddForm user_id={user_id[0].id} />
             </React.StrictMode>,
             document.getElementById('root')
         );
@@ -38,13 +44,12 @@ export default function ExpenseTable(props) {
 
         ReactDOM.render(
             <React.StrictMode>
-                <EditForm category_name={category_name} expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
+                <EditForm user_id={user_id[0].id} category_name={category_name} expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
             </React.StrictMode>,
             document.getElementById('root')
         );
 
     }
-    console.log(data)
     return (
 
         <div>

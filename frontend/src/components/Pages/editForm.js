@@ -24,10 +24,11 @@ export default function EditForm(props) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        await editExpense(props.expenses_id, expenseName, expenseAmount, categoryId);
+        await editExpense(props.expenses_id, expenseName, expenseAmount, categoryId, props.user_id);
         window.location.reload();
 
     }
+
 
     return (
         <div className="Login">
