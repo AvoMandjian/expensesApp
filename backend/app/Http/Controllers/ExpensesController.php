@@ -55,12 +55,20 @@ class ExpensesController extends Controller
      */
     public function show($email)
     {
-        $expenses = DB::select("SELECT expenses.id,expenses.name,expenses.amount,expenses.user_id,users.email, categories.name as category_name
+        $expenses = DB::select("SELECT  expenses.* ,users.email, categories.name as category_name
         FROM expenses
         INNER JOIN users ON expenses.user_id=users.id
         INNER JOIN categories ON expenses.category_id=categories.id
         WHERE users.email='$email'
         ORDER BY expenses.id DESC");
+
+
+        // $expenses = DB::table('expenses')
+        //     ->join('users', 'expenses.user_id', '=', 'users.id')
+        //     ->join('categories', 'expenses.category_id', '=', 'categories.id', 'inner', "users.email=$email")
+        //     ->select('Expenses.*', 'users.name', 'categories.name')
+        //     ->get();
+
         return response()->json($expenses, 200);
     }
 

@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
-import { addExpense } from '../API/ExpensesAPI';
+import { editExpense } from '../API/ExpensesAPI';
 import { getAllCategory } from '../API/CategoryAPI';
 
-export default function AddForm() {
-    const [expenseName, setexpenseName] = useState("");
-    const [expenseAmount, setAmount] = useState('');
-    const [categoryId, setCategory] = useState('');
+export default function EditForm(props) {
+    const [expenseName, setexpenseName] = useState(props.name);
+    const [expenseAmount, setAmount] = useState(props.amount);
+    const [categoryId, setCategory] = useState(props.categoryId);
 
     const [data, setData] = useState([]);
 
@@ -23,7 +23,7 @@ export default function AddForm() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        await addExpense(expenseName, expenseAmount, categoryId);
+        await editExpense(props.expenses_id, expenseName, expenseAmount, categoryId);
         window.location.reload();
 
     }
@@ -34,6 +34,7 @@ export default function AddForm() {
                 <Form.Group size="lg" controlId='expenseName' >
                     <Form.Control
                         placeholder="Expense name"
+
                         value={expenseName}
                         onChange={(e) => setexpenseName(e.target.value)}
                     />
@@ -52,7 +53,7 @@ export default function AddForm() {
                         Select a category:
                     </Form.Label>
                     {data.map(item => (
-                        <Form.Check
+                        < Form.Check
                             name="radio"
                             key={item.id}
                             type="radio"

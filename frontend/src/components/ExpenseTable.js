@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { getAllExpenses, deleteExpense } from './API/ExpensesAPI';
 import AddForm from './Pages/addForm';
+import EditForm from './Pages/editForm';
 
 
 
@@ -15,6 +16,7 @@ export default function ExpenseTable(props) {
     }
     useEffect(() => {
         allExpenses();
+
     }, []);
 
     async function handleDelete(id) {
@@ -32,7 +34,17 @@ export default function ExpenseTable(props) {
         );
 
     }
+    function handleEdit(expenses_id, name, amount, category_id) {
 
+        ReactDOM.render(
+            <React.StrictMode>
+                <EditForm expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
+            </React.StrictMode>,
+            document.getElementById('root')
+        );
+
+    }
+    console.log(data)
     return (
 
         <div>
@@ -43,6 +55,7 @@ export default function ExpenseTable(props) {
                         <th>Expense</th>
                         <th>Amount</th>
                         <th>Category</th>
+                        <th>Date Added</th>
                         <th>Action</th>
                     </tr>
 
@@ -51,9 +64,10 @@ export default function ExpenseTable(props) {
                             <td> {item.name}</td>
                             <td> {item.amount}</td>
                             <td>{item.category_name}</td>
+                            <td>{item.created_at}</td>
                             <td>
                                 <button onClick={() => handleDelete(item.id)} className='btn btn-danger m-1'>DELETE</button>
-                                <button onClick={() => alert('edit ' + item.name + ' in the next update')} className='btn btn-secondary m-1'>EDIT</button>
+                                <button onClick={() => handleEdit(item.id, item.name, item.amount, item.category_id)} className='btn btn-secondary m-1'>EDIT</button>
                             </td>
                         </tr>
                     ))}

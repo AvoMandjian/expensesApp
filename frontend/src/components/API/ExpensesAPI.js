@@ -24,11 +24,18 @@ async function addExpense(name, amount, category) {
     );
 }
 
+async function editExpense(expenses_id, name, amount, category) {
+    return await axios.put(
+        'http://127.0.0.1:8000/api/expenses/' + expenses_id + '?name=' + name + '&amount=' + amount + '&user_id=1&category_id=' + category,
+    );
+}
+
 
 
 export {
     getAllExpenses,
     getOneExpense,
     deleteExpense,
-    addExpense
+    addExpense,
+    editExpense
 }

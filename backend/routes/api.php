@@ -25,5 +25,6 @@ Route::get('expenses/{id}', 'ExpensesController@show');
 Route::get('expenses/showUserExpenses/{id}', 'ExpensesController@showUserExpenses');
 Route::delete('expenses/{id}', 'ExpensesController@destroy');
 Route::post('expenses', 'ExpensesController@store');
+Route::put('expenses/{id}', 'ExpensesController@update');
 
 Route::get('categories', 'CategoryController@index');
