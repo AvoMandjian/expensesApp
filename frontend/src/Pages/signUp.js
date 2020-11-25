@@ -2,9 +2,32 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
+import axios from 'axios';
 import ReactDOM from 'react-dom';
 import ExpenseTable from '../components/ExpenseTable';
-import { checkCredentials } from '../API/UserAPI';
+
+
+
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'JWT fefege...'
+}
+
+axios.post(Helper.getUserAPI(), data, {
+    headers: headers
+})
+    .then((response) => {
+        dispatch({
+            type: FOUND_USER,
+            data: response.data[0]
+        })
+    })
+    .catch((error) => {
+        dispatch({
+            type: ERROR_FINDING_USER
+        })
+    })
+
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -19,24 +42,22 @@ export default function Login() {
     }
     function HandleLogIn(event) {
         event.preventDefault();
-        const isLoggedIn = async () => {
+        const oneExpense = async () => {
 
-            return checkCredentials(email, password);
-
+            return await axios.post("localhost:8000/api/register");
         }
 
-        isLoggedIn().then(function (response) {
+        oneExpense().then(function (response) {
             // handle success
-            if (response.data.message === undefined) {
+            if (response.data !== "") {
                 ReactDOM.render(
                     <React.StrictMode>
-                        <ExpenseTable userEmail={response.data.user.email} userId={response.data.user.id} />
+                        <ExpenseTable userEmail={email} />
                     </React.StrictMode>,
                     document.getElementById('root')
                 );
-                console.log(response.data.user.email)
             } else {
-                alert(response.data.message);
+                alert('not a user');
             }
         })
     }

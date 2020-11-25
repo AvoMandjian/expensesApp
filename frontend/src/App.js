@@ -6,9 +6,7 @@ import ExpenseTable from './components/ExpenseTable';
 export default function App() {
   return (
     <div>
-      {/* <SignIn /> */}
-      <ExpenseTable userEmail='avo@gmail.com' userId='1' />
-
+      <SignIn />
     </div>
   )
 }

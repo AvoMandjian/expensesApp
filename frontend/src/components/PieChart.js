@@ -13,7 +13,7 @@ export default function PieChart(props) {
         colors.push(color);
     }
 
-    console.log(total.length)
+
     return (
         <Doughnut
             data={{
