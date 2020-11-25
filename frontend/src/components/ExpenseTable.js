@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { getAllExpenses, deleteExpense, getUserId } from '../API/ExpensesAPI';
+import { getAllExpensesOfUserId, deleteExpense } from '../API/ExpensesAPI';
 import { getAllCategory, getUserCategoryWithTotal } from '../API/CategoryAPI';
 import AddForm from '../Pages/addForm';
 import EditForm from '../Pages/editForm';
@@ -11,19 +11,16 @@ import PieChart from './PieChart'
 export default function ExpenseTable(props) {
 
     const [data, setData] = useState([]);
-    const [user_id, setUserId] = useState('');
+
     const [categoryData, setcategoryData] = useState([]);
     const [userCategoriesWithExpenses, setuserCategoriesWithExpenses] = useState([]);
 
 
     const allExpenses = async () => {
-        const result = await getAllExpenses(props.userEmail);
+        const result = await getAllExpensesOfUserId(props.userId);
         setData(result.data);
     }
-    const userId = async () => {
-        const userId = await getUserId(props.userEmail);
-        setUserId(userId.data);
-    }
+
 
     const allCategories = async () => {
         const result = await getAllCategory();
@@ -36,7 +33,6 @@ export default function ExpenseTable(props) {
 
     useEffect(() => {
         allExpenses();
-        userId();
         allCategories();
         userCategories();
 
@@ -52,7 +48,7 @@ export default function ExpenseTable(props) {
 
         ReactDOM.render(
             <React.StrictMode>
-                <AddForm categoryData={categoryData} user_id={user_id[0].id} />
+                <AddForm categoryData={categoryData} user_id={props.userId} />
             </React.StrictMode>,
             document.getElementById('root')
         );
@@ -62,14 +58,12 @@ export default function ExpenseTable(props) {
 
         ReactDOM.render(
             <React.StrictMode>
-                <EditForm categoryData={categoryData} user_id={user_id[0].id} category_name={category_name} expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
+                <EditForm categoryData={categoryData} user_id={props.userId} category_name={category_name} expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
             </React.StrictMode>,
             document.getElementById('root')
         );
 
     }
-
-
     return (
         <div className="m-4">
 

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
+// import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
 import ReactDOM from 'react-dom';
 import ExpenseTable from '../components/ExpenseTable';
 import { checkCredentials } from '../API/UserAPI';
+import Cookies from 'universal-cookie';
+
+
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -28,13 +31,18 @@ export default function Login() {
         isLoggedIn().then(function (response) {
             // handle success
             if (response.data.message === undefined) {
+                const cookies = new Cookies();
+                var token = response.data.access_token;
+
+                cookies.set('token', { token }, { path: '/' });
+
                 ReactDOM.render(
                     <React.StrictMode>
-                        <ExpenseTable userEmail={response.data.user.email} userId={response.data.user.id} />
+                        <ExpenseTable userId={response.data.user.id} />
                     </React.StrictMode>,
                     document.getElementById('root')
                 );
-                console.log(response.data.user.email)
+
             } else {
                 alert(response.data.message);
             }

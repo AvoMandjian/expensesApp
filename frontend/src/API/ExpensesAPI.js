@@ -1,49 +1,55 @@
 import axios from 'axios';
+import getCookie from '../API/getCookiesFunction';
+
+const token = getCookie('token');
 
 const baseUrl = 'http://localhost:8000/api/';
 
-function getUserId(email) {
-    return axios.get(
-        baseUrl + 'user/' + email,
-    )
-}
-function getAllExpenses(email) {
-    return axios.get(
-        baseUrl + 'expenses/' + email,
-    );
+function getAllExpensesOfUserId(id) {
+
+    return axios.get
+        (
+            `${baseUrl}expenses/${id}`,
+            { headers: { 'Authorization': `Bearer ${token}` } }
+        )
+        ;
 }
 async function getOneExpense(id) {
     return await axios.get(
-        baseUrl + 'expenses/showUserExpenses/' + id,
+        baseUrl + 'expenses/showUserExpenses/' + id, { headers: { 'Authorization': `Bearer ${token}` } }
+
     );
 }
 
 function deleteExpense($id) {
     return axios.delete(
-        baseUrl + 'expenses/' + $id,
+        baseUrl + 'expenses/' + $id, { headers: { 'Authorization': `Bearer ${token}` } }
+
     );
 }
 
 async function addExpense(name, amount, category, user_id) {
     return await axios.post(
-        baseUrl + 'expenses?name=' + name + '&amount=' + amount + '&user_id=' + user_id + '&category_id=' + category,
+        baseUrl + 'expenses?name=' + name + '&amount=' + amount + '&user_id=' + user_id + '&category_id=' + category, { headers: { 'Authorization': `Bearer ${token}` } }
+
     );
 }
 
 async function editExpense(expenses_id, name, amount, category, user_id) {
-    // console.log(user_id)
+
     return await axios.put(
-        baseUrl + 'expenses/' + expenses_id + '?name=' + name + '&amount=' + amount + '&user_id=' + user_id + '&category_id=' + category,
+        baseUrl + 'expenses/' + expenses_id + '?name=' + name + '&amount=' + amount + '&user_id=' + user_id + '&category_id=' + category, { headers: { 'Authorization': `Bearer ${token}` } }
+
     );
 }
 
 
 
 export {
-    getAllExpenses,
+    getAllExpensesOfUserId,
     getOneExpense,
     deleteExpense,
     addExpense,
     editExpense,
-    getUserId
+
 }

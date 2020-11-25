@@ -59,13 +59,13 @@ class ExpensesController extends Controller
         $expense = Expenses::find($id);
         return response()->json($expense, 200);
     }
-    public function show($email)
+    public function show($id)
     {
         $expenses = DB::select("SELECT  expenses.* ,users.email, categories.name as category_name
         FROM expenses
         INNER JOIN users ON expenses.user_id=users.id
         INNER JOIN categories ON expenses.category_id=categories.id
-        WHERE users.email='$email'
+        WHERE users.id='$id'
         ORDER BY expenses.id DESC");
 
 

@@ -1,16 +1,22 @@
 import './App.css';
 import SignIn from './Pages/SignIn';
-import ExpenseTable from './components/ExpenseTable';
+import ExpenseTable from './components/ExpenseTable'
+import getCookie from './API/getCookiesFunction';
 
 
 export default function App() {
-  return (
-    <div>
-      <SignIn />
-    </div>
-  )
+  const token = getCookie('token');
+  if (token === null) {
+    return (
+      <div>
+        <SignIn />
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <ExpenseTable />
+      </div>
+    )
+  }
 }
-
-// userEmail = 'avo@gmail.com'  userId='1'
-// userEmail = 'avo2@gmail.com'  userId='2'
-// userEmail='avo3@gmail.com'  userId='3'
