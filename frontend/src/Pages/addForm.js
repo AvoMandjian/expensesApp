@@ -2,42 +2,25 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
-import { editExpense } from '../API/ExpensesAPI';
-import { getAllCategory } from '../API/CategoryAPI';
-import OneExpense from "../oneExpense";
+import { addExpense } from '../API/ExpensesAPI';
 
-export default function EditForm(props) {
-    const [expenseName, setexpenseName] = useState(props.name);
-    const [expenseAmount, setAmount] = useState(props.amount);
-    const [categoryId, setCategory] = useState(props.categoryId);
-
-    const [data, setData] = useState([]);
-
-    const allCategories = async () => {
-        const result = await getAllCategory();
-        setData(result.data);
-    }
-    useEffect(() => {
-        allCategories();
-    }, []);
-
+export default function AddForm(props) {
+    const [expenseName, setexpenseName] = useState("");
+    const [expenseAmount, setAmount] = useState('');
+    const [categoryId, setCategory] = useState('');
 
     async function handleSubmit(event) {
         event.preventDefault();
-        await editExpense(props.expenses_id, expenseName, expenseAmount, categoryId, props.user_id);
+        await addExpense(expenseName, expenseAmount, categoryId, props.user_id);
         window.location.reload();
 
     }
-
-
     return (
         <div className="Login">
-            <OneExpense name={props.name} amount={props.amount} category_name={props.category_name} expenses_id={props.expenses_id} />
             <Form onSubmit={handleSubmit}>
                 <Form.Group size="lg" controlId='expenseName' >
                     <Form.Control
                         placeholder="Expense name"
-
                         value={expenseName}
                         onChange={(e) => setexpenseName(e.target.value)}
                     />
@@ -55,8 +38,8 @@ export default function EditForm(props) {
                     <Form.Label as="legend" column>
                         Select a category:
                     </Form.Label>
-                    {data.map(item => (
-                        < Form.Check
+                    {props.categoryData.map(item => (
+                        <Form.Check
                             name="radio"
                             key={item.id}
                             type="radio"

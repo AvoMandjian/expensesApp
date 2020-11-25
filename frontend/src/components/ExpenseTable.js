@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { getAllExpenses, deleteExpense, getUserId } from './API/ExpensesAPI';
-import AddForm from './Pages/addForm';
-import EditForm from './Pages/editForm';
+import { getAllExpenses, deleteExpense, getUserId } from '../API/ExpensesAPI';
+import { getAllCategory, getUserCategoryWithTotal } from '../API/CategoryAPI';
+import AddForm from '../Pages/addForm';
+import EditForm from '../Pages/editForm';
+import PieChart from './PieChart'
 
 
 
@@ -10,6 +12,9 @@ export default function ExpenseTable(props) {
 
     const [data, setData] = useState([]);
     const [user_id, setUserId] = useState('');
+    const [categoryData, setcategoryData] = useState([]);
+    const [userCategoriesWithExpenses, setuserCategoriesWithExpenses] = useState([]);
+
 
     const allExpenses = async () => {
         const result = await getAllExpenses(props.userEmail);
@@ -19,11 +24,24 @@ export default function ExpenseTable(props) {
         const userId = await getUserId(props.userEmail);
         setUserId(userId.data);
     }
+
+    const allCategories = async () => {
+        const result = await getAllCategory();
+        setcategoryData(result.data);
+    }
+    const userCategories = async () => {
+        const result = await getUserCategoryWithTotal(props.userId);
+        setuserCategoriesWithExpenses(result.data);
+    }
+
     useEffect(() => {
         allExpenses();
         userId();
+        allCategories();
+        userCategories();
 
     }, []);
+
 
     async function handleDelete(id) {
 
@@ -34,7 +52,7 @@ export default function ExpenseTable(props) {
 
         ReactDOM.render(
             <React.StrictMode>
-                <AddForm user_id={user_id[0].id} />
+                <AddForm categoryData={categoryData} user_id={user_id[0].id} />
             </React.StrictMode>,
             document.getElementById('root')
         );
@@ -44,15 +62,20 @@ export default function ExpenseTable(props) {
 
         ReactDOM.render(
             <React.StrictMode>
-                <EditForm user_id={user_id[0].id} category_name={category_name} expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
+                <EditForm categoryData={categoryData} user_id={user_id[0].id} category_name={category_name} expenses_id={expenses_id} name={name} amount={amount} category_id={category_id} />
             </React.StrictMode>,
             document.getElementById('root')
         );
 
     }
-    return (
 
-        <div>
+
+    return (
+        <div className="m-4">
+
+            <div> <PieChart categoryData={userCategoriesWithExpenses} /></div>
+            <br></br>
+
             <table className="table table-bordered">
 
                 <tbody>
@@ -70,7 +93,7 @@ export default function ExpenseTable(props) {
                             <td> {item.amount}</td>
                             <td>{item.category_name}</td>
                             <td>{item.created_at}</td>
-                            <td>
+                            <td className="text-center">
                                 <button onClick={() => handleDelete(item.id)} className='btn btn-danger m-1'>DELETE</button>
                                 <button onClick={() => handleEdit(item.category_name, item.id, item.name, item.amount, item.category_id)} className='btn btn-secondary m-1'>EDIT</button>
                             </td>
@@ -78,7 +101,8 @@ export default function ExpenseTable(props) {
                     ))}
                 </tbody>
             </table>
-            <button onClick={() => handleAdd()} className='btn btn-secondary m-3' >Add</button>
+
+            <button onClick={() => handleAdd()} className='btn btn-secondary btn-lg m-2' >Add</button>
         </div >
     );
 

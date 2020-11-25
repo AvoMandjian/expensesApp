@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
 import axios from 'axios';
 import ReactDOM from 'react-dom';
-import ExpenseTable from '../ExpenseTable';
+import ExpenseTable from '../components/ExpenseTable';
 
 export default function Login() {
     const [email, setEmail] = useState("");

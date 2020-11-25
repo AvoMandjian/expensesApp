@@ -1,16 +1,18 @@
 import './App.css';
-import SignIn from './components/Pages/SignIn';
+import SignIn from './Pages/SignIn';
 import ExpenseTable from './components/ExpenseTable';
+
 
 export default function App() {
   return (
     <div>
       {/* <SignIn /> */}
-      <ExpenseTable userEmail='avo2@gmail.com' />
+      <ExpenseTable userEmail='avo@gmail.com' userId='1' />
+
     </div>
   )
 }
 
-// userEmail = 'avo@gmail.com'
-// userEmail = 'avo2@gmail.com'
-// userEmail='avo3@gmail.com'
+// userEmail = 'avo@gmail.com'  userId='1'
+// userEmail = 'avo2@gmail.com'  userId='2'
+// userEmail='avo3@gmail.com'  userId='3'

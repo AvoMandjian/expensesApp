@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -44,9 +45,16 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $expenses = DB::select("SELECT sum(expenses.amount) as total , categories.name as category_name
+        FROM expenses
+        INNER JOIN categories ON expenses.category_id=categories.id
+        WHERE expenses.user_id=$id
+        GROUP BY categories.name;");
+
+
+        return response()->json($expenses, 200);
     }
 
     /**
