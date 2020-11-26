@@ -15,10 +15,10 @@ export default function getCookie(name) {
         if (name === cookiePair[0].trim()) {
             // Decode the cookie value and return
 
-            return decodeURIComponent(cookiePair[1]).split(':')[1].split('"')[1];
+            return JSON.parse(decodeURIComponent(cookiePair[1]));//.split(':')[1].split('"')[1]
         }
     }
 
     // Return null if not found
-    return null;
+    return JSON.parse(1);
 }

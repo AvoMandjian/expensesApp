@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
 import { addExpense } from '../API/ExpensesAPI';
 
 export default function AddForm(props) {
@@ -52,6 +51,11 @@ export default function AddForm(props) {
                 <Button block size="lg" type="submit">
                     Submit
                 </Button>
+                <Form className='mt-3'>
+                    <Button block size="lg" type="submit" >
+                        Back
+                </Button>
+                </Form>
             </Form>
 
         </div >

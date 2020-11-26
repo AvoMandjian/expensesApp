@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-// import "C:/wamp64/www/ExpensesApp/frontend/src/index.css";
-import ReactDOM from 'react-dom';
-import ExpenseTable from '../components/ExpenseTable';
 import { checkCredentials } from '../API/UserAPI';
 import Cookies from 'universal-cookie';
+import "../index.css";
+
 
 
 
@@ -33,16 +32,10 @@ export default function Login() {
             if (response.data.message === undefined) {
                 const cookies = new Cookies();
                 var token = response.data.access_token;
-
+                var userId = response.data.user.id;
                 cookies.set('token', { token }, { path: '/' });
-
-                ReactDOM.render(
-                    <React.StrictMode>
-                        <ExpenseTable userId={response.data.user.id} />
-                    </React.StrictMode>,
-                    document.getElementById('root')
-                );
-
+                cookies.set('userId', { userId }, { path: '/' });
+                window.location.reload();
             } else {
                 alert(response.data.message);
             }

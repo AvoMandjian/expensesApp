@@ -5,8 +5,7 @@ import getCookie from './API/getCookiesFunction';
 
 
 export default function App() {
-  const token = getCookie('token');
-  if (token === null) {
+  if (!getCookie('token').token) {
     return (
       <div>
         <SignIn />
@@ -15,7 +14,7 @@ export default function App() {
   } else {
     return (
       <div>
-        <ExpenseTable />
+        <ExpenseTable userId={getCookie('userId').userId} />
       </div>
     )
   }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import getCookie from '../API/getCookiesFunction';
 
-const token = getCookie('token');
+const token = getCookie('token').token;
 
 const baseUrl = 'http://localhost:8000/api/';
 async function getAllCategory() {
