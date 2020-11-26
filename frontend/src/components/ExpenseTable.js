@@ -70,6 +70,9 @@ export default function ExpenseTable(props) {
             {userCategoriesWithExpenses.length === 0 ?
                 <div>
                     <Heart />
+                    <br></br>
+                    <br></br>
+                    <button onClick={() => handleAdd()} className='btn btn-secondary btn-lg m-2' >Add your first expense</button>
                 </div> : <div>
                     <PieChart categoryData={userCategoriesWithExpenses} />
                     <br></br>
